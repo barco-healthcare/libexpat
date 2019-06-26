@@ -40,7 +40,7 @@
 # clone_depth: 1
 
 # clone directory
-# clone_folder: c:\projects\libexpat
+clone_folder: c:\projects\libexpat
 
 configuration: Release
 
@@ -168,7 +168,7 @@ before_build:
 
 build:
   parallel: true                  # enable MSBuild parallel builds
-  project: c:\projects\libexpat\expat\expat.sln              # path to Visual Studio solution or project
+  project: expat.sln              # path to Visual Studio solution or project
 
 test_script:
   - cp Release\expatd.dll tests\Release
