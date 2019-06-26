@@ -171,5 +171,5 @@ build:
   project: expat.sln              # path to Visual Studio solution or project
 
 test_script:
-  - cp Release\expatd.dll tests\Release
+  - cp Release\expat.dll tests\Release
   - tests\Release\runtests.exe
