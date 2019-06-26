@@ -30,17 +30,17 @@
 # USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # scripts that are called at very beginning, before repo cloning
-init:
-- git config --global core.autocrlf input
+# init:
+# - git config --global core.autocrlf input
 
 # version format
-version: libexpat-{build}
+# version: libexpat-{build}
 
 # set clone depth, clone entire repository history if not defined
-clone_depth: 1
+# clone_depth: 1
 
 # clone directory
-clone_folder: c:\projects\libexpat
+# clone_folder: c:\projects\libexpat
 
 configuration: Release
 
