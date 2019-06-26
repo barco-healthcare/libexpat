@@ -168,7 +168,7 @@ before_build:
 
 build:
   parallel: true                  # enable MSBuild parallel builds
-  project: expat.sln              # path to Visual Studio solution or project
+  project: c:\projects\libexpat\expat\expat.sln              # path to Visual Studio solution or project
 
 test_script:
   - cp Release\expatd.dll tests\Release
