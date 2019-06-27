@@ -44,13 +44,20 @@ clone_folder: c:\projects\libexpat
 
 configuration: Release
 
+image: Visual Studio 2017
+
+platform: 
+  - x64
+  - x86
+  
 # AppVeyor pre-installed software:
 # https://www.appveyor.com/docs/build-environment/#pre-installed-software
 #
 # CMake Visual Studio generators:
 # https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html#visual-studio-generators
 environment:
-  matrix:
+  MSVC_VERSION: 15
+#  matrix:
 #    # Visual Studio 2010 Win32
 #    - GENERATOR: Visual Studio 10 2010
 #      PLATFORM: Win32
@@ -138,25 +145,24 @@ environment:
 #      PLATFORM: x64
 #      CFLAGS: -DXML_UNICODE -DXML_UNICODE_WCHAR_T
 #      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-
-    # Visual Studio 2017 Win32
-    - GENERATOR: Visual Studio 15 2017
-      MSVC_VERSION: 15
-      PLATFORM: Win32
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-
+#
+#    # Visual Studio 2017 Win32
+#    - GENERATOR: Visual Studio 15 2017
+#      MSVC_VERSION: 15
+#      PLATFORM: Win32
+#      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#
 #    # Visual Studio 2017 Win32 XML_UNICODE_WCHAR_T
 #    - GENERATOR: Visual Studio 15 2017
 #      PLATFORM: Win32
 #      CFLAGS: -DXML_UNICODE -DXML_UNICODE_WCHAR_T
 #      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-
-    # Visual Studio 2017 x64
-    - GENERATOR: Visual Studio 15 2017 Win64
-      MSVC_VERSION: 15
-      PLATFORM: x64
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-
+#
+#    # Visual Studio 2017 x64
+#    - GENERATOR: Visual Studio 15 2017 Win64
+#      MSVC_VERSION: 15
+#      PLATFORM: x64
+#
 #    # Visual Studio 2017 x64 XML_UNICODE_WCHAR_T
 #    - GENERATOR: Visual Studio 15 2017 Win64
 #      PLATFORM: x64
@@ -169,20 +175,35 @@ install:
   - pip.exe --quiet install conan
   - conan remote add barco %CONAN_URL%
   - conan user -p %CONAN_API_KEY% -r barco %CONAN_USER%
-
+  
+  # Select MSVC version
+  - if "%platform%" == "x64" (
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+    )
+  - if "%platform%" == "x86" (
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+    )
 
 before_build:
-  - echo Running cmake...
-  - cd c:\projects\libexpat
-  - cmake -DWARNINGS_AS_ERRORS=ON -G"%GENERATOR%" expat
+#  - echo Running cmake...
+#  - cd c:\projects\libexpat
+# - cmake -DWARNINGS_AS_ERRORS=ON -G"%GENERATOR%" expat
+  - cd /D %APPVEYOR_BUILD_FOLDER%
+  - mkdir build
+  - cd build
+  - cmake -G "CodeBlocks - Ninja" -DCMAKE_BUILD_TYPE=%configuration% ..\expat
 
-build:
-  parallel: true                  # enable MSBuild parallel builds
-  project: expat.sln              # path to Visual Studio solution or project
+#build:
+#    parallel: true                  # enable MSBuild parallel builds
+#    project: expat.sln              # path to Visual Studio solution or project
+
+build_script:
+  - cmake --build . --target all --config %configuration%
 
 test_script:
-  - cp Release\expat.dll tests\Release
-  - tests\Release\runtests.exe
+#  - cp Release\expat.dll tests\Release
+#  - tests\Release\runtests.exe
+   - cmake --build . --target test
   
 after_test:
   - cd /D %APPVEYOR_BUILD_FOLDER%
