@@ -2,7 +2,6 @@ from conans import ConanFile, CMake
 
 class LibExpatConan(ConanFile):
     name = "libexpat"
-    version = "2.2.7.0"
     license = "MIT"
     url = "https://libexpat.github.io/"
     description = "XML parser"

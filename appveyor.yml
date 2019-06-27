@@ -33,6 +33,8 @@
 init:
 - git config --global core.autocrlf input
 
+image: Visual Studio 2017
+
 # version format
 version: libexpat-{build}
 
