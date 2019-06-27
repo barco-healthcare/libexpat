@@ -33,8 +33,6 @@
 init:
 - git config --global core.autocrlf input
 
-image: Visual Studio 2017
-
 # version format
 version: libexpat-{build}
 
@@ -143,6 +141,7 @@ environment:
 
     # Visual Studio 2017 Win32
     - GENERATOR: Visual Studio 15 2017
+      MSVC_VERSION: 15
       PLATFORM: Win32
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
@@ -154,6 +153,7 @@ environment:
 
     # Visual Studio 2017 x64
     - GENERATOR: Visual Studio 15 2017 Win64
+      MSVC_VERSION: 15
       PLATFORM: x64
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
