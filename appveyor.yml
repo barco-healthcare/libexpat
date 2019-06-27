@@ -161,6 +161,14 @@ environment:
 #      CFLAGS: -DXML_UNICODE -DXML_UNICODE_WCHAR_T
 #      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
+install:
+  # Fetch and setup conan
+  - set PATH=%PATH%;%PYTHON%/Scripts/
+  - pip.exe --quiet install conan
+  - conan remote add barco %CONAN_URL%
+  - conan user -p %CONAN_API_KEY% -r barco %CONAN_USER%
+
+
 before_build:
   - echo Running cmake...
   - cd c:\projects\libexpat
@@ -173,3 +181,7 @@ build:
 test_script:
   - cp Release\expat.dll tests\Release
   - tests\Release\runtests.exe
+  
+after_test:
+  - cd /D %APPVEYOR_BUILD_FOLDER%
+  - conan.build.cmd
