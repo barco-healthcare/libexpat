@@ -176,6 +176,13 @@ install:
   - conan remote add barco %CONAN_URL%
   - conan user -p %CONAN_API_KEY% -r barco %CONAN_USER%
   
+  # Install Ninja
+  - set NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.6.0/ninja-win.zip"
+  - appveyor DownloadFile %NINJA_URL% -FileName ninja.zip
+  - 7z x ninja.zip -oC:\projects\deps\ninja > nul
+  - del ninja.zip
+  - set PATH=C:\projects\deps\ninja;%PATH%
+  
   # Select MSVC version
   - if "%platform%" == "x64" (
       call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
