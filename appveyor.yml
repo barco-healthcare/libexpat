@@ -42,7 +42,9 @@ clone_depth: 1
 # clone directory
 clone_folder: c:\projects\libexpat
 
-configuration: Release
+configuration: 
+    - Release
+    - Debug
 
 image: Visual Studio 2017
 
