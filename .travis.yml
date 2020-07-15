@@ -5,7 +5,7 @@ language: cpp
 os:
   - linux
   - osx
-dist: trusty
+dist: focal
 
 # Unbreak clang address sanitizer, needs SYS_PTRACE
 # https://github.com/google/sanitizers/issues/764#issuecomment-276663297
@@ -36,7 +36,7 @@ addons:
     brewfile: true
   apt:
     packages:
-      - cmake
+
       - docbook2x
       - dos2unix
       - lzip
